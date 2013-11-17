@@ -1,0 +1,92 @@
+a <- "#5p1500 #6p2450 #4p2350 #3p500 #2p1950 #1p900 t2000";
+s <- "#5p1500 #6p1300 #4p1850 #3p500 #2p1950 #1p1350 t2000";
+d <- "#5p1500 #6p830 #4p1750 #3p1320 #2p1950 #1p1350 t2000";
+f <- "#5p1500 #6p830 #4p1750 #3p1280 #2p1950 #1p880 t2000";
+x <- "#5p1500 #6p900 #4p2200 #3p2100 #2p1950 #1p850 t2000";
+j <- "#5p1500 #6p1650 #4p2500 #3p1550 #2p1950 #1p760 t2000";
+k <- "#5p1400 #6p1650 #4p2500 #3p1550 #2p1950 #1p760 t500";
+l <- "#5p1400 #6p1650 #4p2500 #3p1550 #2p850 #1p760 t2000";
+g <- "#5p1500 #6p800 #4p1400 #3p800 #2p1950 #1p1350 t2000";
+s <- "#5p1500 #6p1300 #4p1850 #3p500 #2p1950 #1p1350 t2000";
+
+e <- "#5p2080 #6p1540 #4p2160 #3p700 #2p1950 #1p1350 t2000";
+w <- "#5p2090 #6p1310 #4p1950 #3p580 #2p1950 #1p1350 t2000";
+r <- "#5p2070 #6p1310 #4p1970 #3p580 #2p1950 #1p940 t2000";
+u <- "#5p2500 #6p1980 #4p2050 #3p770 #2p1950 #1p900 t2000";
+t <- "#5p2500 #6p1770 #4p2450 #3p900 #2p1950 #1p800 t2000";
+i <- "#5p2500 #6p2230 #4p2500 #3p500 #2p1950 #1p1350 t2000";
+
+function exec_command(value) {
+        
+        if (value == "water") {
+            command_water();
+        } else if (value == "flag") {
+            command_flag();
+        } else {
+            command(value);
+        }
+        
+        server.log("got command: " + value);
+    }
+
+function init() {
+    hardware.uart12.configure(115200, 8, PARITY_NONE, 1, NO_CTSRTS);
+    imp.configure("RA", [], []);   
+    
+    agent.on("value", exec_command);
+    
+    command(a);
+    imp.sleep(2);
+}
+
+function command(cmd) {
+    hardware.uart12.write(cmd + "\r");
+}
+
+function command_water() {
+    command(s);
+    imp.sleep(2);
+    command(d);
+    imp.sleep(2);
+    command(f);
+    imp.sleep(2);
+    command(x);
+    imp.sleep(2);
+    command(j);
+    imp.sleep(2);
+    command(k);
+    imp.sleep(0.5);
+    command(l);
+    imp.sleep(2);
+    command(j);
+    imp.sleep(2);
+    command(x);
+    imp.sleep(2);
+    command(d);
+    imp.sleep(2);
+    command(g);
+    imp.sleep(2);
+    command(s);
+    imp.sleep(2);
+    command(a);
+    imp.sleep(2);
+}
+
+function command_flag() {
+    command(e);
+    imp.sleep(2);
+    command(w);
+    imp.sleep(2);
+    command(r);
+    imp.sleep(2);
+    command(u);
+    imp.sleep(5);
+    command(t);
+    imp.sleep(2);
+    command(i);
+    imp.sleep(2);
+    command(a);
+    imp.sleep(2);
+}
+
+init();
