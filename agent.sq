@@ -1,0 +1,14 @@
+
+function requestHandler(request, response) {
+  try {
+    if ("value" in request.query) {
+        local command = request.query.value;
+        device.send("value", command); 
+    }
+    response.send(200, "OK");
+  } catch (ex) {
+    response.send(500, "Internal Server Error: " + ex);
+  }
+}
+ 
+http.onrequest(requestHandler);
